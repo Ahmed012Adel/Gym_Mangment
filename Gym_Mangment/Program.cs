@@ -1,4 +1,7 @@
 
+using GYMMAngment.Presistente.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Gym_Mangment
 {
     public class Program
@@ -7,6 +10,9 @@ namespace Gym_Mangment
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            builder.Services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             // Add services to the container.
 
             builder.Services.AddControllers();
