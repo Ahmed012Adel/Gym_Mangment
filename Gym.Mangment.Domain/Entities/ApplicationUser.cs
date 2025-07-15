@@ -10,12 +10,12 @@ namespace Gym.Mangment.Domain.Entities
     public class ApplicationUser :IdentityUser
     {
         // classes has trainer
-        public required ICollection<GYMClasses> Classes { get; set; }
+        public required ICollection<GYMClasses> Classes { get; set; } = new List<GYMClasses>();
 
         //members Attend classes
-        public required ICollection<GYMClasses> MembersAttend { get; set; }
+        public required ICollection<GYMClasses> MembersAttend { get; set; } = new List<GYMClasses>();
         //members subscrip classes
-        public required ICollection<Subscription> Subscripes { get; set; }
+        public required ICollection<Subscription> Subscripes { get; set; } = new List<Subscription>();
 
     }
 }

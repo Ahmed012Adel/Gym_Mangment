@@ -1,4 +1,5 @@
 ﻿using Gym.Mangment.Domain.Contract;
+using Gym.Mangment.Domain.Entities;
 using GYMMAngment.Presistente.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,12 +19,22 @@ namespace GYMMAngment.Presistente.Reposteries
             return WithTracking ? await context.Set<TEntity>().ToListAsync() :
                     await context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
+        public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync
+            (ISpecification<TEntity> specification, bool WithTracking = false)
+        {
+            return await ApplyQuery(specification).ToListAsync();
+        }
+       
 
         public async Task<TEntity?> GetByIdAsync(TKey id)
         {
             return await context.Set<TEntity>().FindAsync(id);
         }
-                
+
+        public async Task<TEntity?> GetWithSpecAsync(ISpecification<TEntity> specification)
+        {
+            return await ApplyQuery(specification).FirstOrDefaultAsync();
+        }
         public async Task AddAsync(TEntity entity)
                 =>await context.Set<TEntity>().AddAsync(entity);
         
@@ -34,5 +45,13 @@ namespace GYMMAngment.Presistente.Reposteries
         }
         public void DeleteAsync(TEntity entity)
                 =>context.Set<TEntity>().Remove(entity);
+
+
+        private IQueryable<TEntity> ApplyQuery(ISpecification<TEntity> specification)
+        {
+            return SpecificstionEvaluter<TEntity>.GetQuery(context.Set<TEntity>(), specification);
+        }
+
+        
     }
 }

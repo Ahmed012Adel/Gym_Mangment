@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GymMangment.Application\GymMangment.Application.csproj" />
     <ProjectReference Include="..\GYMMAngment.Presistente\GYMMAngment.Presistente.csproj" />
   </ItemGroup>
 

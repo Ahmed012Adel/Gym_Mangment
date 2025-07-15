@@ -11,7 +11,9 @@ namespace Gym.Mangment.Domain.Contract
         where TKey : IEquatable<TKey>
     {
         public Task<TEntity?> GetByIdAsync(TKey id);
+        public Task<TEntity?> GetWithSpecAsync(ISpecification<TEntity> specification);
         public Task<IEnumerable<TEntity>> GetAllAsync(bool WithTracking = false);
+        public Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecification<TEntity> specification, bool WithTracking = false);
         public Task AddAsync(TEntity entity);
         public void UpdateAsync(TEntity entity);
         public void DeleteAsync(TEntity entity);

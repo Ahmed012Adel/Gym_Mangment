@@ -22,7 +22,7 @@ namespace GYMMAngment.Presistente.Data
             builder.Entity<ApplicationUser>(entity =>
             {
                 entity.HasMany(e => e.Classes)
-                      .WithMany(e => e.Trainer);
+                      .WithOne(e => e.Trainer);
 
                 entity.HasMany(e => e.MembersAttend)
                       .WithMany(e => e.Member);
@@ -30,6 +30,16 @@ namespace GYMMAngment.Presistente.Data
                 entity.HasMany(e => e.Subscripes)
                       .WithOne(e => e.Member)
                       .HasForeignKey(e => e.MemberId);
+            });
+            builder.Entity<GYMClasses>(G=>
+            {
+                G.HasOne(T=>T.Trainer)
+                 .WithMany(T => T.Classes)
+                 .HasForeignKey(F => F.TrainerId)
+                 .OnDelete(DeleteBehavior.Cascade);
+                G.HasMany(M => M.Member)
+                .WithMany(M => M.MembersAttend)
+                 ;
             });
         }
 

@@ -10,7 +10,9 @@ namespace Gym.Mangment.Domain.Entities
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public required ICollection<ApplicationUser> Trainer { get; set; }
-        public required ICollection<ApplicationUser> Member { get; set; }
+
+        public required string TrainerId { get; set; }  
+        public  required ApplicationUser Trainer { get; set; }
+        public ICollection<ApplicationUser> Member { get; set; } =null!;
     }
 }

@@ -1,5 +1,11 @@
 
+using Gym.Mangment.Domain.Contract;
+using Gym.Mangment.Domain.Entities;
+using GymMangment.Application;
+using GymMangment.Application.Abstraction;
 using GYMMAngment.Presistente.Data;
+using GYMMAngment.Presistente.Reposteries;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gym_Mangment
@@ -10,9 +16,18 @@ namespace Gym_Mangment
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddScoped(typeof(IGenericRepo<,>), typeof(GenricRepositery<,>));
+            builder.Services.AddScoped(typeof(IGymClassesService), typeof(GymClassService));
+
 
             builder.Services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
+
+
             // Add services to the container.
 
             builder.Services.AddControllers();
